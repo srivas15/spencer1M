@@ -56,4 +56,4 @@ while(1):
 		session.quit()
 		sys.exit()
 	else:
-		time.sleep(20)
+		time.sleep(600)
