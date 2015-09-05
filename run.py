@@ -1,16 +1,15 @@
-from apiclient.discovery import build
-from apiclient.errors import HttpError
-from oauth2client.tools import argparser
+import requests
+import urllib2
+from bs4 import BeautifulSoup
 
-DEVELOPER_KEY = "AIzaSyA0kLPG3WHvA1tCdLsH5TuWiNMnR7SUxVI"
-YOUTUBE_API_SERVICE_NAME = "youtube"
-YOUTUBE_API_VERSION = "v3"
+url = 'https://www.youtube.com/user/officialfifaplaya/about'
+html = urllib2.urlopen(url).read()
+soup = BeautifulSoup(html, "html.parser")
 
-youtube = build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION, developerKey=DEVELOPER_KEY)
+info = soup.find("div", {"class": "about-stats"})
+stats = info.find("span", {"class": "about-stat"})
+subs_in_html = stats.find('b')
+subs = subs_in_html.getText()
 
-subscription_feed = yt_service.GetYouTubeSubscriptionFeed(username='spencerFC')
+print subs
 
-if isinstance(subscription_feed, gdata.youtube.YouTubeSubscriptionFeed)):
-  # given a YouTubeSubscriptionEntry we can determine it's type (channel, favorite, or query)
-	for entry in subscription_feed.entry:
-		print entry.GetSubscriptionType()
